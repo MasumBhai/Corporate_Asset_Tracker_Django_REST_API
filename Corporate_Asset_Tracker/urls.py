@@ -1,19 +1,35 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-from Asset_Tracker.views import CompanyViewSet, DeviceViewSet, SubscriberViewSet, SubscriptionViewSet
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-
-router = routers.DefaultRouter()
-router.register(r'companies', CompanyViewSet)
-router.register(r'devices', DeviceViewSet)
-router.register(r'subscribers', SubscriberViewSet)
-router.register(r'subscriptions', SubscriptionViewSet)
+from Asset_Tracker.views import *
+from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('api/user/', UserAPIView.as_view(), name='user'),
+    # jwt-authentication
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Company URLs
+    path('companies/', CompanyListCreateView.as_view(), name='company-list-create'),
+    path('companies/<int:pk>/', CompanyRetrieveUpdateDestroyView.as_view(), name='company-retrieve-update-destroy'),
+
+    # Device URLs
+    path('devices/', DeviceListCreateView.as_view(), name='device-list-create'),
+    path('devices/<int:pk>/', DeviceRetrieveUpdateDestroyView.as_view(), name='device-retrieve-update-destroy'),
+    path('devices/<int:pk>/assign/', DeviceAssignView.as_view(), name='device-assign'),
+
+    # Employee URLs
+    path('employees/', EmployeeListCreateView.as_view(), name='employee-list-create'),
+    path('employees/<int:pk>/', EmployeeRetrieveUpdateDestroyView.as_view(), name='employee-retrieve-update-destroy'),
+    path('employees/<int:pk>/assignments/', EmployeeAssignmentsListView.as_view(), name='employee-assignments-list'),
+
+    # for admin
     path("admin/", admin.site.urls),
+
+    # for api authentications
     path('api-auth/', include('rest_framework.urls')),
+
     # for swagger
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:

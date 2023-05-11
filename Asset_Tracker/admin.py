@@ -1,28 +1,26 @@
 from django.contrib import admin
-from .models import Company, Device, Subscriber, Subscription
+from .models import Company, Device, Employee, DeviceAssignment
 
 
-class SubscriptionInline(admin.TabularInline):
-    model = Subscription
-    extra = 1
-
-
-class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'company', 'condition')
-    list_filter = ('company',)
-
-
-class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ('user', 'company')
-    list_filter = ('company', 'devices')
-    inlines = [SubscriptionInline]
-
-
+@admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'domain')
-    list_filter = ('employees',)
+    list_display = ('name', 'location', 'phone_number')
+    search_fields = ('name',)
 
 
-admin.site.register(Company, CompanyAdmin)
-admin.site.register(Device, DeviceAdmin)
-admin.site.register(Subscriber, SubscriberAdmin)
+@admin.register(Device)
+class DeviceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'serial_number', 'condition', 'company', 'checked_out')
+    search_fields = ('name', 'serial_number')
+
+
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
+    search_fields = ('company', 'devices')
+
+
+@admin.register(DeviceAssignment)
+class DeviceAssignmentAdmin(admin.ModelAdmin):
+    list_display = ('device', 'employee', 'assigned_date', 'return_date', 'updated_at')
+    search_fields = ('device', 'employee__name')
+

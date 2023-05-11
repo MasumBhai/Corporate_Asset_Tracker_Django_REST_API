@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Device, Subscriber, Subscription
+from .models import Company, Device, Employee, DeviceAssignment
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -14,13 +14,16 @@ class DeviceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SubscriberSerializer(serializers.ModelSerializer):
+class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Subscriber
+        model = Employee
         fields = '__all__'
 
 
-class SubscriptionSerializer(serializers.ModelSerializer):
+class DeviceAssignmentSerializer(serializers.ModelSerializer):
+    device = DeviceSerializer(read_only=True)
+    employee = EmployeeSerializer(read_only=True)
+
     class Meta:
-        model = Subscription
+        model = DeviceAssignment
         fields = '__all__'

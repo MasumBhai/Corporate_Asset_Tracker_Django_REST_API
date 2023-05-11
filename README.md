@@ -87,6 +87,9 @@ py manage.py spectacular --color --file schema.yml
 ```
 - For Testing:
 ```shell
+pip install coverage
+coverage run -m pytest
+coverage html
 pip install pytest
 pip install pytest-django
 pytest -h
@@ -98,3 +101,8 @@ py manage.py migrate
 python manage.py createsuperuser
 py manage.py runserver
 ```
+- For Token Based Authentication:
+```shell
+pip install djangorestframework_simplejwt
+```
+
