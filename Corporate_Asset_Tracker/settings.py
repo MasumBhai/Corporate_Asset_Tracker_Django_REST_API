@@ -6,14 +6,26 @@ import os
 
 load_dotenv()  # for environment file loading
 SECRET_KEY = os.environ.get("SECRET_KEY")
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
+# BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    # For Admin Dashboard
+    "bootstrap_admin",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,9 +55,8 @@ ROOT_URLCONF = "Corporate_Asset_Tracker.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates']
-        ,
-        "APP_DIRS": True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -65,7 +76,7 @@ WSGI_APPLICATION = "Corporate_Asset_Tracker.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -122,7 +133,7 @@ SPECTACULAR_SETTINGS = {
     a certain period of time\n
     4. Each company should be able to see when a Device was checked out and returned\n
     5. Each device should have a log of what condition it was handed out and returned.\n """,
-    'VERSION': '1.0.0',
+    'VERSION': 'Version-1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
 

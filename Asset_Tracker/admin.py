@@ -1,6 +1,10 @@
 from django.contrib import admin
 from .models import Company, Device, Employee, DeviceAssignment
 
+admin.site.site_header = "Asset Tracker API"
+admin.site.site_title = "Corporate Asset Tracker Django REST API"
+admin.site.index_title = "Welcome Admin"
+
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
@@ -23,4 +27,3 @@ class EmployeeAdmin(admin.ModelAdmin):
 class DeviceAssignmentAdmin(admin.ModelAdmin):
     list_display = ('device', 'employee', 'assigned_date', 'return_date', 'updated_at')
     search_fields = ('device', 'employee__name')
-

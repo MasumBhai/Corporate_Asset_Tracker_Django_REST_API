@@ -12,7 +12,7 @@ __pycache__/
 ####
 .venv/
 venv/
-.env
+#.env
 ####
 # Unit Test & Coverage Reports
 ####
@@ -26,3 +26,7 @@ htmlcov/
 *.sqlite3
 Asset_Tracker/migrations
 schema.yml
+
+### Static Files
+staticfiles/
+```
