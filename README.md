@@ -28,9 +28,9 @@ I have used Postman & swagger for testing the API's. <br/>
 
 ### Steps to run the project:
 1. Clone the project from the git repository. Even you can download the zip file from the git repository. (For your ease: I have included .env file)
-    - git clone
+    - git clone https://github.com/MasumBhai/Corporate_Asset_Tracker_Django_REST_API.git
 2. Create a virtual environment and activate it.
-3. Install the required packages from requirements.txt file.
+3. Install the required packages from `requirements.txt` file.
 4. Run the following commands:
     - py manage.py makemigrations
     - py manage.py migrate --run-syncdb
@@ -41,6 +41,7 @@ I have used Postman & swagger for testing the API's. <br/>
 5. Open the browser and hit the following url for performing API testing in swagger:<br/>
    - url: http://127.0.0.1:8000/api/schema/swagger-ui/
 6. Now, you have to authenticate yourself before doing any operation. To do that, hit the token endpoint and pass the username and password in the body. You will get a refresh token & access token in the response. Copy the access token and paste it in the authorize section of swagger. Now, you can perform any operation.
+   - url: http://127.0.0.1:8000/token/
 7. You can also see the admin dashboard using the following url:
     - url: http://127.0.0.1:8000/admin/
 8. Also, you can login to the admin panel using the following / superuser credentials & perform any database operation using my cool admin dashboard panel:
@@ -52,16 +53,18 @@ I have used Postman & swagger for testing the API's. <br/>
 10. You can also see the coverage report using the following command and open the htmlcov folder & open the index.html file:
     - coverage html
 12. You can also see the API documentation using the following url:
-    - url: http://127.0.0.1:8000/api/schema/
+    - url: http://127.0.0.1:8000/api/schema/redoc/
 
 
 ### Database Schema:
+This implementation has 4 main models: Company, Device, Employee, and DeviceAssignment.<br/>
+ 1. `Company` stores information about the companies using the app.<br/>
+ 2. `Device` represents the corporate assets, with information such as their name, description, serial number, condition, and which company they belong to.<br/>
+ 3. `Employee` represents the company's staff, with a one-to-one relationship to a Django user and a many-to-many relationship with the Device model, through the DeviceAssignment model.<br/>
+ 4. `DeviceAssignment` represents the assignments of devices to employees, with a foreign key to both the Device and Employee models, as well as the assignment and return dates.<br/>
 
-
-
-
-
-<details><summary><b>Project Commands For Future Use (Geeky Stuff):</b></summary> 
+### Project Commands:
+<details><summary><b>For Future Use (Geeky Stuff):</b></summary> 
 
 - For secret key generation:
 ```shell
